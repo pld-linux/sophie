@@ -12,14 +12,17 @@ Source2:	%{name}.sysconfig
 URL:		http://www.vanja.com/tools/sophie/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	rpmbuild(macros) >= 1.159
 PreReq:		rc-scripts
-Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(post,preun):	/sbin/chkconfig
-Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Provides:	group(sweep)
+Provides:	user(sweep)
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 #%define		_noautoreqdep	libsavi.so.3
@@ -74,21 +77,22 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`getgid sweep`" ]; then
-	if [ "`getgid sweep`" != "97" ]; then
+if [ -n "`/usr/bin/getgid sweep`" ]; then
+	if [ "`/usr/bin/getgid sweep`" != "97" ]; then
 		echo "Error: group sweep doesn't have gid=97. Correct this before installing sophie." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/groupadd -g 97 -r -f sweep 1>&2 || :
+	/usr/sbin/groupadd -g 97 sweep 1>&2
 fi
-if [ -n "`id -u sweep 2>/dev/null`" ]; then
-	if [ "`id -u sweep`" != "24" ]; then
+if [ -n "`/bin/id -u sweep 2>/dev/null`" ]; then
+	if [ "`/bin/id -u sweep`" != "24" ]; then
 		echo "Error: user sweep doesn't have uid=24. Correct this before installing sophie." 1>&2
 		exit 1
 	fi
 else
-	/usr/sbin/useradd -u 24 -g sweep -r -d /usr/local/sav -s /bin/false -c "Anti Virus Checker" sweep 1>&2
+	/usr/sbin/useradd -u 24 -g sweep -d /usr/share/empty -s /bin/false \
+		-c "Anti Virus Checker" sweep 1>&2
 fi
 
 %post
@@ -109,8 +113,8 @@ fi
 
 %postun
 if [ "$1" = "0" ]; then
-	/usr/sbin/userdel sweep
-	/usr/sbin/groupdel sweep
+	%userremove sweep
+	%groupremove sweep
 fi
 
 %files
