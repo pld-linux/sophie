@@ -26,20 +26,20 @@ case "$1" in
 		daemon $SERVICE_RUN_NICE_LEVEL '/usr/sbin/sophie -D'
 		touch /var/lock/subsys/sophie
 	else
-		msg_Already_Running Sophie
+		msg_already_running Sophie
 		exit 1
 	fi
 	;;
   stop)
-        # Stop daemons.
-        if [ -f /var/lock/subsys/sophie ]; then
-                msg_stopping Sophie
+	# Stop daemons.
+	if [ -f /var/lock/subsys/sophie ]; then
+		msg_stopping Sophie
 		killproc sophie;
-                rm -f /var/lock/subsys/sophie >/dev/null 2>&1
-        else
-                msg_Not_Running Sophie
-                exit 1
-        fi
+		rm -f /var/lock/subsys/sophie >/dev/null 2>&1
+	else
+		msg_not_running Sophie
+		exit 1
+	fi
 	;;
   status)
 	status sophie
@@ -54,7 +54,7 @@ case "$1" in
 	$0 start
 	;;
   *)
-	msg_usage "$0 {start|stop|status|reload|restart}"
+	msg_usage "$0 {start|stop|restart|reload|status}"
 	exit 1
 esac
 
