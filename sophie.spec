@@ -1,12 +1,12 @@
 Summary:	Sophie is a daemon which uses 'libsavi' library from Sophos antivirus
 Summary(pl):	Sophie jest demonem u¿ywaj±cym biblioteki 'libsavi' z Sophosa
 Name:		sophie
-Version:	1.40rc1
+Version:	1.44
 Release:	1
 License:	GPL
 Group:		Applications/Mail
 Source0:	http://www.vanja.com/tools/sophie/%{name}-%{version}.tar.bz2
-# Source0-md5:	bf7205a19d1c7c8f36b9b1191ba704f8
+# Source0-md5:	4b8cdcd5f550a811cfceae87d2cfb0d0
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://www.vanja.com/tools/sophie/
@@ -22,7 +22,7 @@ Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_noautoreqdep	libsavi.so.2
+#%define		_noautoreqdep	libsavi.so.3
 
 %description
 Sophie is a daemon which uses 'libsavi' library from Sophos anti virus
@@ -57,7 +57,8 @@ ustawieñ SAVI i rozmiaru sprawdzanego pliku.
 %{__autoconf}
 %configure \
 	--with-user=amavis \
-	--with-group=nobody
+	--with-group=nobody \
+	--enable-net
 %{__make}
 
 %install
