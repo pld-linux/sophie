@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Mail
 Source0:	http://www.vanja.com/tools/sophie/%{name}-%{version}.tar.bz2
+# Source0-md5:	bf7205a19d1c7c8f36b9b1191ba704f8
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://www.vanja.com/tools/sophie/
