@@ -1,0 +1,4 @@
+# Sophie startup configuration file
+
+# Try to define nice-level for running sophie
+SERVICE_RUN_NICE_LEVEL="+0"

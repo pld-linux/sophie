@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# sophie	Start/Stop the sophie daemon.
+#
+# chkconfig:	345 39 61
+#
+# description:	sophie is daemonized Sophos scanner
+#
+# processname:	sophie
+# pidfile:	/var/run/sophie.pid
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get service config
+[ -f /etc/sysconfig/sophie ] && . /etc/sysconfig/sophie
+
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/sophie ]; then
+		msg_starting Sophie
+		daemon $SERVICE_RUN_NICE_LEVEL '/usr/sbin/sophie -D'
+		touch /var/lock/subsys/sophie
+	else
+		msg_Already_Running Sophie
+		exit 1
+	fi
+	;;
+  stop)
+        # Stop daemons.
+        if [ -f /var/lock/subsys/sophie ]; then
+                msg_stopping Sophie
+		killproc sophie;
+                rm -f /var/lock/subsys/sophie >/dev/null 2>&1
+        else
+                msg_Not_Running Sophie
+                exit 1
+        fi
+	;;
+  status)
+	status sophie
+	/usr/sbin/sophie -v
+	/usr/sbin/sophie -c
+	;;
+  reload)
+	killall -HUP sophie
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  *)
+	msg_usage "$0 {start|stop|status|reload|restart}"
+	exit 1
+esac
+
+exit $RETVAL
