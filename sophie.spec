@@ -24,7 +24,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Sophie is a daemon which uses 'libsavi' library from Sophos anti
-virus vendor ( http://www.sophos.com ).
+virus vendor ( http://www.sophos.com/ ).
 
 On startup, Sophie initializes SAPI (Sophos Anti-Virus Interface),
 loads virus patterns into memory, opens local UNIX domain socket,
@@ -33,6 +33,19 @@ scan.
 
 Since it is loaded in RAM, scanning is very fast. Of course, speed
 of scanning also depends on SAVI settings and size of the file.
+
+%description -l pl
+Sophie jest demonem który u¿ywa biblioteki 'libsavi' udostêpnionej
+przez producenta oprogramowania antywirusowego Sophos 
+( http://www.sophos.com/ ).
+
+Podczas uruchomienia, Sophie inicjuje SAPI (Sophos Anti-Virus Interface),
+wczytuje wzorce wirusów do pamiêci, otwiera lokalne gniazdo unixowe,
+i czeka na po³±czenie i polecenie sprawdzenia danej ¶cie¿ki.
+
+Jako, ¿e Sophie ca³y czas jest za³adowana w pamiêci RAM, skanowanie jest
+bardzo szybkie. Oczywi¶cie prêdko¶æ tego skanowania zale¿y od ustawieñ
+SAVI i rozmiaru sprawdzanego pliku.
 
 %prep
 %setup -q
