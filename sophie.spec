@@ -9,15 +9,16 @@ Source0:	http://www.vanja.com/tools/sophie/%{name}-%{version}.tar.bz2
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://www.vanja.com/tools/sophie/
-#BuildRequires:	-
-#PreReq:		-
-#Requires:	-
-#Requires(pre,post):	-
-#Requires(preun):	-
-#Requires(postun):	-
-#Provides:	-
-#Obsoletes:	-
-#Conflicts:	-
+BuildRequires:	autoconf
+BuildRequires:	automake
+PreReq:		rc-scripts
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/bin/id
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/userdel
+Requires(postun):	/usr/sbin/groupdel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libsavi.so.2
@@ -40,7 +41,7 @@ http://www.sophos.com/ ).
 
 Podczas uruchomienia, Sophie inicjuje SAPI (Sophos Anti-Virus
 Interface), wczytuje wzorce wirusów do pamiêci, otwiera lokalne
-gniazdo unixowe, i czeka na po³±czenie i polecenie sprawdzenia danej
+gniazdo uniksowe, i czeka na po³±czenie i polecenie sprawdzenia danej
 ¶cie¿ki.
 
 Jako, ¿e Sophie ca³y czas jest za³adowana w pamiêci RAM, skanowanie
