@@ -16,7 +16,7 @@
 # Get service config
 [ -f /etc/sysconfig/sophie ] && . /etc/sysconfig/sophie
 
-
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -28,7 +28,6 @@ case "$1" in
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/sophie
 	else
 		msg_already_running Sophie
-		exit 1
 	fi
 	;;
   stop)
@@ -39,11 +38,11 @@ case "$1" in
 		rm -f /var/lock/subsys/sophie >/dev/null 2>&1
 	else
 		msg_not_running Sophie
-		exit 1
 	fi
 	;;
   status)
 	status sophie
+	RETVAL=$?
 	/usr/sbin/sophie -v
 	/usr/sbin/sophie -c
 	;;
@@ -53,8 +52,8 @@ case "$1" in
 		killall -HUP sophie
 		exit $?
 	else
-		msg_not_running Sophie
-		exit 1
+		msg_not_running Sophie >&2
+		exit 7
 	fi
 	;;
   restart)
@@ -64,7 +63,7 @@ case "$1" in
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	exit 3
 esac
 
 exit $RETVAL
