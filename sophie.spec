@@ -1,5 +1,5 @@
-Summary:	Sophie is a daemon which uses 'libsavi' library from Sophos antivirus.
-Summary(pl):	Sophie jest demonem u¿ywaj±cym biblioteki 'libsavi' z Sophosa.
+Summary:	Sophie is a daemon which uses 'libsavi' library from Sophos antivirus
+Summary(pl):	Sophie jest demonem u¿ywaj±cym biblioteki 'libsavi' z Sophosa
 Name:		sophie
 Version:	1.40rc1
 Release:	1
