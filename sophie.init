@@ -24,15 +24,16 @@ case "$1" in
 	if [ ! -f /var/lock/subsys/sophie ]; then
 		msg_starting Sophie
 		daemon $SERVICE_RUN_NICE_LEVEL '/usr/sbin/sophie -D'
-		touch /var/lock/subsys/sophie
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/sophie
 	else
 		msg_already_running Sophie
 		exit 1
 	fi
 	;;
   stop)
-	# Stop daemons.
 	if [ -f /var/lock/subsys/sophie ]; then
+		# Stop daemons.
 		msg_stopping Sophie
 		killproc sophie;
 		rm -f /var/lock/subsys/sophie >/dev/null 2>&1
@@ -46,15 +47,23 @@ case "$1" in
 	/usr/sbin/sophie -v
 	/usr/sbin/sophie -c
 	;;
-  reload)
-	killall -HUP sophie
+  reload|force-reload)
+	if [ -f /var/lock/subsys/sophie ]; then
+		msg_reloading Sophie
+		killall -HUP sophie
+		exit $?
+	else
+		msg_not_running Sophie
+		exit 1
+	fi
 	;;
   restart)
 	$0 stop
 	$0 start
+	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 1
 esac
 
