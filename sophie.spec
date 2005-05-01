@@ -12,7 +12,7 @@ Source2:	%{name}.sysconfig
 URL:		http://www.vanja.com/tools/sophie/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.202
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
@@ -29,7 +29,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Sophie is a daemon which uses 'libsavi' library from Sophos anti virus
-vendor ( http://www.sophos.com/ ).
+vendor <http://www.sophos.com/>.
 
 On startup, Sophie initializes SAPI (Sophos Anti-Virus Interface),
 loads virus patterns into memory, opens local UNIX domain socket, and
@@ -77,23 +77,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ -n "`/usr/bin/getgid sweep`" ]; then
-	if [ "`/usr/bin/getgid sweep`" != "97" ]; then
-		echo "Error: group sweep doesn't have gid=97. Correct this before installing sophie." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/groupadd -g 97 sweep 1>&2
-fi
-if [ -n "`/bin/id -u sweep 2>/dev/null`" ]; then
-	if [ "`/bin/id -u sweep`" != "24" ]; then
-		echo "Error: user sweep doesn't have uid=24. Correct this before installing sophie." 1>&2
-		exit 1
-	fi
-else
-	/usr/sbin/useradd -u 24 -g sweep -d /usr/share/empty -s /bin/false \
-		-c "Anti Virus Checker" sweep 1>&2
-fi
+%groupadd -g 97 sweep
+%useradd -u 24 -g sweep -d /usr/share/empty -s /bin/false -c "Anti Virus Checker" sweep
 
 %post
 /sbin/chkconfig --add sophie
