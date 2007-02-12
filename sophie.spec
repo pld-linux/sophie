@@ -1,5 +1,5 @@
 Summary:	Sophie is a daemon which uses 'libsavi' library from Sophos antivirus
-Summary(pl):	Sophie jest demonem u¿ywaj±cym biblioteki 'libsavi' z Sophosa
+Summary(pl.UTF-8):   Sophie jest demonem uÅ¼ywajÄ…cym biblioteki 'libsavi' z Sophosa
 Name:		sophie
 Version:	1.44
 Release:	1
@@ -38,19 +38,19 @@ waits for someone to connect and instructs it which path to scan.
 Since it is loaded in RAM, scanning is very fast. Of course, speed of
 scanning also depends on SAVI settings and size of the file.
 
-%description -l pl
-Sophie jest demonem który u¿ywa biblioteki 'libsavi' udostêpnionej
+%description -l pl.UTF-8
+Sophie jest demonem ktÃ³ry uÅ¼ywa biblioteki 'libsavi' udostÄ™pnionej
 przez producenta oprogramowania antywirusowego Sophos (
 http://www.sophos.com/ ).
 
 Podczas uruchomienia, Sophie inicjuje SAPI (Sophos Anti-Virus
-Interface), wczytuje wzorce wirusów do pamiêci, otwiera lokalne
-gniazdo uniksowe, i czeka na po³±czenie i polecenie sprawdzenia danej
-¶cie¿ki.
+Interface), wczytuje wzorce wirusÃ³w do pamiÄ™ci, otwiera lokalne
+gniazdo uniksowe, i czeka na poÅ‚Ä…czenie i polecenie sprawdzenia danej
+Å›cieÅ¼ki.
 
-Jako, ¿e Sophie ca³y czas jest za³adowana w pamiêci RAM, skanowanie
-jest bardzo szybkie. Oczywi¶cie prêdko¶æ tego skanowania zale¿y od
-ustawieñ SAVI i rozmiaru sprawdzanego pliku.
+Jako, Å¼e Sophie caÅ‚y czas jest zaÅ‚adowana w pamiÄ™ci RAM, skanowanie
+jest bardzo szybkie. OczywiÅ›cie prÄ™dkoÅ›Ä‡ tego skanowania zaleÅ¼y od
+ustawieÅ„ SAVI i rozmiaru sprawdzanego pliku.
 
 %prep
 %setup -q
